@@ -1,0 +1,125 @@
+{
+  "title": "TIMUR FEARLESS",
+  "subtitle": "IRL FORTUNE WHEEL",
+  "tagline": "LIVE CHALLENGE SPIN",
+  "spinDurationMs": 7600,
+  "autoSpinOnLoad": false,
+  "autoSpinDelayMs": 900,
+  "pollNetlifyState": true,
+  "pollIntervalMs": 1800,
+  "muted": false,
+  "particles": true,
+  "sparks": true,
+  "maxParticles": 132,
+  "reducedPerformance": false,
+  "resultHoldMs": 9000,
+  "sound": {
+    "enabled": true,
+    "volume": 0.42,
+    "spin": "assets/sounds/spin.wav",
+    "tick": "assets/sounds/tick.wav",
+    "result": "assets/sounds/result.wav"
+  },
+  "colors": {
+    "accent": "#18d8ff",
+    "hot": "#ff2bd6",
+    "gold": "#ffd166",
+    "green": "#7dff6a",
+    "violet": "#7c5cff",
+    "ink": "#07111f"
+  },
+  "triggers": {
+    "donationMinEur": 5,
+    "twitchBitsMin": 500,
+    "kickMinEur": 5,
+    "youtubeMinEur": 5,
+    "paidSubs": true,
+    "youtubeMembers": true
+  },
+  "items": [
+    {
+      "label": "Touch Grass",
+      "icon": "assets/icons/grass.svg",
+      "color": "#7dff6a",
+      "weight": 1,
+      "detail": "Find some green nearby and touch it on camera."
+    },
+    {
+      "label": "Find Blue",
+      "icon": "assets/icons/blue.svg",
+      "color": "#18d8ff",
+      "weight": 1,
+      "detail": "Point the camera at any blue object."
+    },
+    {
+      "label": "Coffee Stop",
+      "icon": "assets/icons/coffee.svg",
+      "color": "#ffd166",
+      "weight": 1,
+      "detail": "Find a cafe, cup, or coffee sign."
+    },
+    {
+      "label": "Chat Route",
+      "icon": "assets/icons/route-choice.svg",
+      "color": "#7c5cff",
+      "weight": 1,
+      "detail": "Show two safe directions and let chat pick."
+    },
+    {
+      "label": "Say Hello",
+      "icon": "assets/icons/hello.svg",
+      "color": "#00f5d4",
+      "weight": 1,
+      "detail": "Give a friendly wave or hello to the stream."
+    },
+    {
+      "label": "Mini Review",
+      "icon": "assets/icons/review.svg",
+      "color": "#18d8ff",
+      "weight": 1,
+      "detail": "Rate this spot in one sentence."
+    },
+    {
+      "label": "Find Flag",
+      "icon": "assets/icons/flag.svg",
+      "color": "#ffffff",
+      "weight": 1,
+      "detail": "Find a flag, sign, logo, or landmark."
+    },
+    {
+      "label": "POV Spin",
+      "icon": "assets/icons/camera.svg",
+      "color": "#ff2bd6",
+      "weight": 1,
+      "detail": "Do a slow safe camera pan for chat."
+    },
+    {
+      "label": "Rate Spot",
+      "icon": "assets/icons/star.svg",
+      "color": "#ffd166",
+      "weight": 1,
+      "detail": "Give the current view a score out of ten."
+    },
+    {
+      "label": "Lucky Bonus",
+      "icon": "assets/icons/gift.svg",
+      "color": "#ffcc33",
+      "weight": 1,
+      "detail": "Chat gets a bonus quick choice."
+    },
+    {
+      "label": "Talk To Chat",
+      "icon": "assets/icons/chat.svg",
+      "color": "#9efcff",
+      "weight": 1,
+      "detail": "Answer one chat question while rolling safely."
+    },
+    {
+      "label": "Cinematic Shot",
+      "icon": "assets/icons/clapper.svg",
+      "color": "#b8c7ff",
+      "weight": 1,
+      "detail": "Capture a clean five second scenic shot."
+    }
+  ]
+}

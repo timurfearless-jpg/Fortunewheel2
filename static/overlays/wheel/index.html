@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Timur Fearless IRL Fortune Wheel</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="overlay-root" aria-live="polite">
+      <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
+
+      <header class="masthead">
+        <div class="flag-mark" aria-hidden="true"></div>
+        <div class="title-stack">
+          <h1 id="overlayTitle">TIMUR FEARLESS</h1>
+          <p id="overlaySubtitle">IRL FORTUNE WHEEL</p>
+          <span id="overlayTagline">LIVE CHALLENGE SPIN</span>
+        </div>
+        <div class="map-chip" aria-hidden="true">
+          <span>FINLAND</span>
+          <strong>ONE WHEEL</strong>
+        </div>
+      </header>
+
+      <section class="hud-layout">
+        <aside class="side-panel about-panel">
+          <h2>ABOUT TIMUR</h2>
+          <ul>
+            <li>IRL monowheel adventures</li>
+            <li>Exploring Finland</li>
+            <li>One wheel no limits</li>
+            <li>Community powered</li>
+          </ul>
+        </aside>
+
+        <section class="wheel-stage">
+          <div class="wheel-rig" id="wheelRig">
+            <canvas id="wheelCanvas" class="wheel-canvas" aria-label="IRL fortune wheel"></canvas>
+            <div class="wheel-pointer" aria-hidden="true">
+              <svg viewBox="0 0 88 98" role="img">
+                <path d="M44 94 8 12 44 28 80 12Z" />
+                <path d="M44 75 24 28 44 38 64 28Z" />
+              </svg>
+            </div>
+            <div class="wheel-hub" aria-hidden="true">
+              <span>GO</span>
+            </div>
+            <div class="scan-ring" aria-hidden="true"></div>
+          </div>
+        </section>
+
+        <aside class="side-panel status-panel">
+          <section class="challenge-card" id="resultPanel">
+            <span id="resultSignal">CURRENT CHALLENGE</span>
+            <div class="challenge-row">
+              <img id="resultIcon" alt="" />
+              <div>
+                <h2 id="resultLabel">TOUCH GRASS</h2>
+                <p id="resultDetail">Find some green and touch it.</p>
+              </div>
+            </div>
+            <small id="triggerLine">Waiting for donation, bits, sub, member, or manual test.</small>
+          </section>
+
+          <section class="trigger-card">
+            <h2>TRIGGERED BY</h2>
+            <div class="trigger-grid">
+              <span>Donation EUR 5+</span>
+              <span>Twitch Bits 500+</span>
+              <span>Paid Sub</span>
+              <span>Kick Support</span>
+              <span>YouTube Member</span>
+              <span>Super Sticker</span>
+            </div>
+          </section>
+        </aside>
+      </section>
+
+      <footer class="bottom-strip">
+        <span>Current route</span>
+        <strong>HELSINKI -> LIVE IRL</strong>
+        <em>Any qualifying support can spin the wheel</em>
+      </footer>
+    </main>
+    <script src="./overlay.js"></script>
+  </body>
+</html>

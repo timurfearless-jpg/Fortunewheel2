@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cinematic shot icon">
+  <path fill="none" stroke="#f6fbff" stroke-linejoin="round" stroke-width="4" d="M10 24h44v30H10zM10 14h44v10H10z"/>
+  <path fill="none" stroke="#b8c7ff" stroke-linecap="round" stroke-width="4" d="m18 14 8 10M32 14l8 10M46 14l8 10"/>
+  <path fill="#ff2bd6" d="M27 32v14l13-7z"/>
+</svg>

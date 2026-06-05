@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fortune Wheel Demo</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="demo-page">
+    <main class="demo-shell">
+      <header class="demo-header">
+        <div>
+          <p class="eyebrow">Netlify stream preview</p>
+          <h1>Fortune Wheel Demo</h1>
+        </div>
+        <a class="demo-link" href="/control.html">Control panel</a>
+      </header>
+
+      <section class="demo-layout">
+        <div class="demo-preview" id="demoPreview">
+          <iframe id="demoOverlay" title="OBS overlay preview" src="/overlay.html?demo=1&layout=center" allow="autoplay" allowtransparency="true"></iframe>
+        </div>
+
+        <aside class="demo-console">
+          <div class="demo-console-head">
+            <span id="demoStatus">loading overlay</span>
+            <strong>Stream Flow</strong>
+          </div>
+
+          <div class="demo-actions">
+            <button class="primary-button" type="button" data-demo-source="twitch-points" data-demo-reason="Channel Points">Channel Points</button>
+            <button class="secondary-button" type="button" data-demo-source="donation" data-demo-reason="Donation 5 EUR">5 EUR Donation</button>
+            <button class="ghost-button" type="button" data-demo-source="twitch-sub" data-demo-reason="Sub">Sub</button>
+          </div>
+
+          <div class="demo-flow">
+            <span>Trigger</span>
+            <span>Wheel</span>
+            <span>Chat Echo</span>
+          </div>
+
+          <section class="chat-preview" aria-live="polite">
+            <p>Chat message</p>
+            <strong id="chatEcho">Spin the wheel to preview the full chat output.</strong>
+          </section>
+
+          <ol class="history-list demo-history" id="demoHistory">
+            <li>Waiting for a demo spin.</li>
+          </ol>
+        </aside>
+      </section>
+    </main>
+    <script src="/demo.js"></script>
+  </body>
+</html>

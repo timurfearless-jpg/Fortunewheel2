@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Neon dance icon">
+  <circle cx="32" cy="12" r="5" fill="none" stroke="#18d8ff" stroke-width="4"/>
+  <path fill="none" stroke="#f6fbff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M31 18l-7 14 11 8 8 15M35 40l-14 13M27 27l-12-4M36 25l13-7"/>
+  <path fill="none" stroke="#ff2bd6" stroke-linecap="round" stroke-width="4" d="M11 15l5 4M50 10l-3 8"/>
+</svg>

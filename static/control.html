@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fortune Wheel Control</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="control-page">
+    <main class="control-shell">
+      <header class="control-header">
+        <div>
+          <p class="eyebrow">OBS interaction</p>
+          <h1>Fortune Wheel</h1>
+        </div>
+        <div class="status-pill" id="connectionStatus">loading</div>
+      </header>
+
+      <section class="control-grid">
+        <form class="panel launch-panel" id="spinForm">
+          <div class="panel-heading">
+            <h2>Launch</h2>
+            <button class="icon-button" type="button" id="reloadButton" title="Reload settings">R</button>
+          </div>
+          <label>
+            Viewer or reason
+            <input id="spinName" name="name" autocomplete="off" placeholder="Test viewer" value="Test viewer" />
+          </label>
+          <button class="primary-button" type="submit">Spin the wheel</button>
+          <p class="muted" id="lastResult">Control panel is ready.</p>
+        </form>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>Links</h2>
+          </div>
+          <label>
+            OBS Browser Source
+            <div class="copy-row">
+              <input id="overlayUrl" readonly />
+              <button class="copy-button" type="button" data-copy="overlayUrl">Copy</button>
+            </div>
+          </label>
+          <label>
+            Donation webhook from 5 EUR
+            <div class="copy-row">
+              <input id="donationUrl" readonly />
+              <button class="copy-button" type="button" data-copy="donationUrl">Copy</button>
+            </div>
+          </label>
+          <label>
+            External trigger URL
+            <div class="copy-row">
+              <input id="triggerUrl" readonly />
+              <button class="copy-button" type="button" data-copy="triggerUrl">Copy</button>
+            </div>
+          </label>
+        </section>
+
+        <section class="panel status-panel">
+          <div class="panel-heading">
+            <h2>Twitch</h2>
+          </div>
+          <dl class="status-list">
+            <div>
+              <dt>Chat</dt>
+              <dd id="twitchConnected">-</dd>
+            </div>
+            <div>
+              <dt>Command</dt>
+              <dd id="twitchCommand">-</dd>
+            </div>
+            <div>
+              <dt>Reward ID</dt>
+              <dd id="rewardId">-</dd>
+            </div>
+            <div>
+              <dt>Latest</dt>
+              <dd id="twitchMessage">-</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="panel editor-panel">
+          <div class="panel-heading">
+            <h2>Challenges</h2>
+            <button class="secondary-button" type="button" id="saveChallenges">Save</button>
+          </div>
+          <div class="challenge-list" id="challengeList"></div>
+          <button class="ghost-button" type="button" id="addChallenge">Add challenge</button>
+        </section>
+
+        <section class="panel history-panel">
+          <div class="panel-heading">
+            <h2>History</h2>
+          </div>
+          <ol class="history-list" id="historyList"></ol>
+        </section>
+      </section>
+    </main>
+    <script src="/control.js"></script>
+  </body>
+</html>

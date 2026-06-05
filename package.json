@@ -1,0 +1,18 @@
+{
+  "name": "timur-fortune-wheel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Netlify-ready OBS Browser Source fortune wheel for Twitch chat, subs and donation triggers.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node scripts/prepare-public.js && node scripts/test-wheel.js",
+    "test": "node scripts/test-wheel.js"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^10.0.10"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

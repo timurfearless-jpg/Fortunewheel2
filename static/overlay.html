@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fortune Wheel Overlay</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="overlay-page">
+    <main class="overlay-shell" aria-live="polite">
+      <canvas id="confetti" class="confetti-layer"></canvas>
+      <section class="wheel-stage" id="wheelStage">
+        <div class="wheel-column">
+          <div class="brand-lockup">
+            <span id="brandTitle"></span>
+            <small id="brandSubtitle"></small>
+          </div>
+          <div class="wheel-frame">
+            <canvas id="wheelCanvas" class="wheel-canvas"></canvas>
+            <div class="wheel-pointer"></div>
+            <div class="wheel-hub">
+              <strong aria-label="Spin">SPIN</strong>
+              <span id="queueBadge">0</span>
+            </div>
+          </div>
+        </div>
+        <div class="result-panel" id="resultPanel">
+          <p class="trigger-line" id="triggerLine"></p>
+          <div class="result-head">
+            <div class="result-icon" id="resultIcon" aria-hidden="true"></div>
+            <h1 id="challengeTitle">READY</h1>
+          </div>
+          <p class="challenge-description" id="challengeDescription">Fortune wheel challenge</p>
+          <div class="result-meta" aria-label="Wheel activation conditions">
+            <span>5+ EUR donation</span>
+            <span>Sub</span>
+            <span>50,000 channel points</span>
+          </div>
+          <span id="challengeDuration" hidden></span>
+          <span id="accentText" hidden></span>
+        </div>
+      </section>
+    </main>
+    <script src="/overlay.js"></script>
+  </body>
+</html>

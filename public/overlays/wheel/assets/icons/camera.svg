@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="POV camera icon">
+  <path fill="none" stroke="#f6fbff" stroke-linejoin="round" stroke-width="4" d="M10 23h13l5-6h12l5 6h9v27H10z"/>
+  <circle cx="32" cy="37" r="10" fill="none" stroke="#ff2bd6" stroke-width="4"/>
+  <path fill="none" stroke="#18d8ff" stroke-linecap="round" stroke-width="4" d="M46 17h8"/>
+</svg>

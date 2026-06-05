@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Find blue icon">
+  <circle cx="27" cy="27" r="15" fill="none" stroke="#f6fbff" stroke-width="4"/>
+  <path fill="none" stroke="#18d8ff" stroke-linecap="round" stroke-width="5" d="m39 39 13 13"/>
+  <path fill="#18d8ff" d="M21 22h14v10H21z"/>
+</svg>

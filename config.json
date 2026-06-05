@@ -1,0 +1,143 @@
+{
+  "server": {
+    "port": 8732
+  },
+  "security": {
+    "triggerSecret": "change-me"
+  },
+  "brand": {
+    "title": "TIMUR FEARLESS",
+    "subtitle": "IRL FORTUNE WHEEL",
+    "accentText": "5+ EUR / 500+ bits / paid sub / member",
+    "palette": ["#18d8ff", "#7dff6a", "#ff2bd6", "#ffd166", "#7c5cff", "#00f5d4", "#b8c7ff", "#ffcc33", "#0b74d9", "#14f195", "#1d4fff", "#ffffff"],
+    "background": "transparent"
+  },
+  "wheel": {
+    "spinSeconds": 7.6,
+    "idlePulse": true,
+    "showQueue": true,
+    "confetti": true,
+    "sound": true,
+    "soundVolume": 0.18
+  },
+  "chat": {
+    "enabled": true,
+    "template": "Wheel result: {title} - {description} Time: {duration}"
+  },
+  "twitch": {
+    "enabled": false,
+    "channel": "your_channel",
+    "botUsername": "your_bot_name",
+    "oauthToken": "oauth:your_twitch_chat_token",
+    "spinCommand": "!spin",
+    "minRewardCost": 50000,
+    "minBits": 500,
+    "requireChannelPointsReward": true,
+    "rewardId": "",
+    "triggerOnBits": true,
+    "triggerOnSubs": true,
+    "triggerOnResubs": true,
+    "triggerOnSubGifts": true
+  },
+  "donations": {
+    "enabled": true,
+    "minAmountEur": 5,
+    "acceptedCurrencies": ["EUR"],
+    "webhookSecret": "change-me"
+  },
+  "streamEvents": {
+    "enabled": true,
+    "secret": "change-me",
+    "minAmountEur": 5,
+    "minBits": 500,
+    "triggerOnPaidSubs": true,
+    "triggerOnMembers": true,
+    "acceptedCurrencies": ["EUR"]
+  },
+  "challenges": [
+    {
+      "label": "Grass",
+      "title": "Touch grass",
+      "description": "Find some green nearby and touch it on camera.",
+      "duration": "1 min",
+      "weight": 1
+    },
+    {
+      "label": "Blue",
+      "title": "Find blue",
+      "description": "Point the camera at any blue object around you.",
+      "duration": "1 min",
+      "weight": 1
+    },
+    {
+      "label": "Coffee",
+      "title": "Coffee stop",
+      "description": "Find a cafe, cup, or coffee sign and show it to chat.",
+      "duration": "2 min",
+      "weight": 1
+    },
+    {
+      "label": "Route",
+      "title": "Chat route",
+      "description": "Show two safe directions and let chat pick where the wheel sends you.",
+      "duration": "2 min",
+      "weight": 1
+    },
+    {
+      "label": "Hello",
+      "title": "Say hello",
+      "description": "Give a friendly wave or hello to the stream while staying safe.",
+      "duration": "20 sec",
+      "weight": 1
+    },
+    {
+      "label": "Review",
+      "title": "Mini review",
+      "description": "Rate the current spot in one quick sentence.",
+      "duration": "30 sec",
+      "weight": 1
+    },
+    {
+      "label": "Flag",
+      "title": "Find flag",
+      "description": "Find a flag, sign, logo, or landmark and show it to chat.",
+      "duration": "1 min",
+      "weight": 1
+    },
+    {
+      "label": "POV",
+      "title": "POV spin",
+      "description": "Do a slow safe camera pan so chat sees the area.",
+      "duration": "20 sec",
+      "weight": 1
+    },
+    {
+      "label": "Rate",
+      "title": "Rate this spot",
+      "description": "Give the current view a score out of ten and explain why.",
+      "duration": "30 sec",
+      "weight": 1
+    },
+    {
+      "label": "Bonus",
+      "title": "Lucky bonus",
+      "description": "Chat gets one bonus quick choice that is safe and easy.",
+      "duration": "1 min",
+      "weight": 1
+    },
+    {
+      "label": "Chat",
+      "title": "Talk to chat",
+      "description": "Answer one chat question while rolling safely or while stopped.",
+      "duration": "1 min",
+      "weight": 1
+    },
+    {
+      "label": "Cinematic",
+      "title": "Cinematic shot",
+      "description": "Capture a clean five second scenic shot for the stream.",
+      "duration": "5 sec",
+      "weight": 1
+    }
+  ]
+}

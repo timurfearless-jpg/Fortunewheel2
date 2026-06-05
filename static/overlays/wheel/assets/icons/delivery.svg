@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Delivery icon">
+  <path fill="none" stroke="#f6fbff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M9 21h27v25H9zM36 29h10l8 9v8H36z"/>
+  <path fill="none" stroke="#18d8ff" stroke-linecap="round" stroke-width="4" d="M15 17h15M3 29h13M5 37h10"/>
+  <circle cx="19" cy="49" r="5" fill="none" stroke="#ff2bd6" stroke-width="4"/>
+  <circle cx="46" cy="49" r="5" fill="none" stroke="#ff2bd6" stroke-width="4"/>
+</svg>

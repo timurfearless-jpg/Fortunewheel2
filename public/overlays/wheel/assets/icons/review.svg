@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Mini review icon">
+  <path fill="none" stroke="#f6fbff" stroke-linejoin="round" stroke-width="4" d="M13 12h38v40H13z"/>
+  <path fill="none" stroke="#18d8ff" stroke-linecap="round" stroke-width="4" d="M22 24h20M22 34h20M22 44h11"/>
+  <path fill="#ff2bd6" d="m45 42 4 3-2 5 5-3 5 3-2-5 4-3h-5l-2-5-2 5z"/>
+</svg>
