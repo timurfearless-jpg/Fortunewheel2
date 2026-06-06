@@ -30,6 +30,10 @@ if (!fs.existsSync(publicDir)) {
   process.exit(0);
 }
 
+assertInside(root, staticDir);
+if (fs.existsSync(staticDir)) {
+  fs.rmSync(staticDir, { recursive: true, force: true });
+}
 fs.mkdirSync(staticDir, { recursive: true });
 
 for (const entry of fs.readdirSync(publicDir, { withFileTypes: true })) {
@@ -37,9 +41,6 @@ for (const entry of fs.readdirSync(publicDir, { withFileTypes: true })) {
   const targetPath = path.join(staticDir, entry.name);
   assertInside(staticDir, targetPath);
   if (entry.isDirectory()) {
-    if (fs.existsSync(targetPath)) {
-      fs.rmSync(targetPath, { recursive: true, force: true });
-    }
     copyDirectory(sourcePath, targetPath);
   } else if (entry.isFile()) {
     fs.copyFileSync(sourcePath, targetPath);

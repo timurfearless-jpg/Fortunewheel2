@@ -10,9 +10,9 @@ const filesToCheck = [
   "server.js",
   "scripts/prepare-public.js",
   "public/overlays/wheel/overlay.js",
-  "static/overlay.js",
-  "static/control.js",
-  "static/demo.js",
+  "public/overlays/wheel/control.js",
+  "static/overlays/wheel/overlay.js",
+  "static/overlays/wheel/control.js",
   "netlify/functions/_shared.js",
   "netlify/functions/config.js",
   "netlify/functions/state.js",
@@ -73,62 +73,34 @@ assert(chatMessage.includes(sampleChallenge.title), "chat message should include
 assert(chatMessage.includes(sampleChallenge.description), "chat message should include the full description");
 assert(chatMessage.includes(sampleChallenge.duration), "chat message should include the duration");
 
-const demoHtml = fs.readFileSync(path.join(root, "static/demo.html"), "utf8");
-assert(demoHtml.includes("/overlay.html?demo=1&layout=center"), "demo page should embed centered overlay demo mode");
-assert(demoHtml.includes("data-demo-source=\"twitch-points\""), "demo page should preview channel-points spins");
-assert(demoHtml.includes("data-demo-source=\"donation\""), "demo page should preview donation spins");
-assert(demoHtml.includes("data-demo-source=\"twitch-sub\""), "demo page should preview sub spins");
-assert(demoHtml.includes("allow=\"autoplay\""), "demo iframe should allow overlay audio preview");
-assert(!demoHtml.includes("stream-scene"), "demo page should not use a fake stream screenshot scene");
+const rootIndex = fs.readFileSync(path.join(root, "static/index.html"), "utf8");
+const rootDemo = fs.readFileSync(path.join(root, "static/demo.html"), "utf8");
+const rootControl = fs.readFileSync(path.join(root, "static/control.html"), "utf8");
+const redirects = fs.readFileSync(path.join(root, "static/_redirects"), "utf8");
+assert(rootIndex.includes("/overlays/wheel/control.html"), "root page should open the current control page");
+assert(rootDemo.includes("/overlays/wheel/control.html"), "legacy demo page should open the current control page");
+assert(rootControl.includes("/overlays/wheel/control.html"), "legacy control page should open the current control page");
+assert(redirects.includes("/demo.html"), "Netlify redirects should replace the legacy demo URL");
+assert(!fs.existsSync(path.join(root, "static/demo.js")), "legacy demo JavaScript should be removed from publish output");
+assert(!fs.existsSync(path.join(root, "static/styles.css")), "legacy root styles should be removed from publish output");
 
-const overlayJs = fs.readFileSync(path.join(root, "static/overlay.js"), "utf8");
-assert(!overlayJs.includes("drawMapTexture"), "wheel canvas should not render map-style texture");
-assert(overlayJs.includes("drawWheelRims"), "wheel canvas should render game HUD rims");
-assert(overlayJs.includes("drawSectorIcon"), "wheel sectors should render icons instead of text labels");
-assert(overlayJs.includes("resultIconSvg"), "result panel should render the selected challenge icon");
-assert(overlayJs.includes("iconPalette"), "wheel icons should use colored palettes");
-assert(overlayJs.includes("hexToRgba"), "wheel canvas should render neon rgba glows from palette colors");
-assert(overlayJs.includes("fortuneGlow"), "READY icon should use a colorful fortune graphic");
-assert(!overlayJs.includes("strokeText"), "wheel sectors should not render text labels");
-assert(!overlayJs.includes("fillText"), "wheel sectors should not render text labels");
-assert(overlayJs.includes("playTickSound"), "overlay should play sector tick sounds");
-assert(overlayJs.includes("playResultSound"), "overlay should play result sound");
-
-const overlayHtml = fs.readFileSync(path.join(root, "static/overlay.html"), "utf8");
-assert(!overlayHtml.includes("OBS Browser Source"), "overlay should not show OBS Browser Source text");
-assert(!overlayHtml.includes("light IRL challenges"), "overlay should use shorter idle copy");
-assert(!overlayHtml.includes("no-cringe"), "overlay idle copy should not mention cringe");
-assert(!overlayHtml.includes("TIMUR IRL"), "overlay title should be shorter");
-assert(!overlayHtml.includes("MAP WHEEL"), "overlay subtitle should be shorter");
-assert(overlayHtml.includes("5+ EUR donation"), "overlay should show donation trigger condition");
-assert(overlayHtml.includes(">Sub<"), "overlay should show sub trigger condition");
-assert(overlayHtml.includes("50,000 channel points"), "overlay should show channel-points trigger condition");
-assert(overlayHtml.includes("Fortune wheel challenge"), "overlay idle copy should say Fortune wheel challenge");
-assert(overlayHtml.includes(">SPIN<"), "wheel hub should keep a compact spin label");
-
-const styles = fs.readFileSync(path.join(root, "static/styles.css"), "utf8");
-assert(styles.includes("@media (max-width: 700px)"), "styles should include mobile layout rules");
-assert(styles.includes("@media (max-width: 380px)"), "styles should include narrow-phone layout rules");
-assert(styles.includes("width: 1920px"), "demo overlay should render at stream width before scaling");
-assert(styles.includes("height: 1080px"), "demo overlay should render at stream height before scaling");
-assert(!styles.includes(".stream-scene"), "demo styles should not include fake stream scene styling");
-assert(styles.includes(".layout-hud .wheel-stage"), "overlay should include compact HUD layout");
-assert(styles.includes(".layout-center .wheel-stage"), "overlay should include centered high-quality layout");
-assert(styles.includes("@keyframes scanSweep"), "overlay should include wheel sweep animation");
-assert(styles.includes("@keyframes pointerTick"), "overlay should include pointer tick animation");
-assert(styles.includes("@keyframes iconDrop"), "overlay should animate the result icon drop");
-assert(styles.includes("@keyframes iconReadyPulse"), "READY icon should have idle animation");
-assert(styles.includes(".overlay-page .brand-lockup"), "overlay should hide extra top labels");
-assert(!styles.includes(".overlay-page .result-meta"), "overlay should not hide trigger conditions");
-assert(styles.includes("clip-path: polygon(22px 0"), "result panel should use an angular cyber frame");
-assert(styles.includes("rgba(24, 216, 255"), "overlay should use cyan neon HUD styling");
-
-const demoJs = fs.readFileSync(path.join(root, "static/demo.js"), "utf8");
-assert(demoJs.includes("STREAM_WIDTH = 1920"), "demo script should use fixed stream preview width");
-assert(demoJs.includes("STREAM_HEIGHT = 1080"), "demo script should use fixed stream preview height");
-
-const controlJs = fs.readFileSync(path.join(root, "static/control.js"), "utf8");
-assert(controlJs.includes("/overlay.html?layout=center"), "control panel should copy the centered overlay URL by default");
+const overlayJs = fs.readFileSync(path.join(root, "static/overlays/wheel/overlay.js"), "utf8");
+const overlayHtml = fs.readFileSync(path.join(root, "static/overlays/wheel/index.html"), "utf8");
+const styles = fs.readFileSync(path.join(root, "static/overlays/wheel/styles.css"), "utf8");
+const controlJs = fs.readFileSync(path.join(root, "static/overlays/wheel/control.js"), "utf8");
+const controlHtml = fs.readFileSync(path.join(root, "static/overlays/wheel/control.html"), "utf8");
+const overlayConfig = JSON.parse(fs.readFileSync(path.join(root, "static/overlays/wheel/config.json"), "utf8"));
+assert(overlayJs.includes("playTickIfNeeded"), "overlay should play sector tick sounds");
+assert(overlayJs.includes("scheduleAutoHide"), "overlay should hide after the result");
+assert(overlayJs.includes("drawSectorChance"), "overlay should show configured chance percentages");
+assert(overlayHtml.includes("<span>GO</span>"), "wheel hub should show GO");
+assert(styles.includes("background: transparent"), "OBS overlay should use a transparent browser background");
+assert(styles.includes(".overlay-root.is-hidden"), "OBS overlay should support hidden idle state");
+assert(controlJs.includes("balanceOdds"), "control page should rebalance challenge percentages");
+assert(controlHtml.includes("wheelPreview"), "control page should embed the current wheel preview");
+assert.strictEqual(overlayConfig.hideWhenIdle, true, "normal OBS URL should be hidden while idle");
+assert.strictEqual(overlayConfig.hideAfterResultMs, 15000, "OBS overlay should hide 15 seconds after result");
+assert.strictEqual(overlayConfig.challenges.length, 13, "overlay should include all current challenges");
 
 const headers = fs.readFileSync(path.join(root, "static/_headers"), "utf8");
 assert(headers.includes("Content-Security-Policy"), "Netlify headers should include CSP");
