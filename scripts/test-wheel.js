@@ -94,6 +94,12 @@ assert(overlayJs.includes("playTickIfNeeded"), "overlay should play sector tick 
 assert(overlayJs.includes("scheduleAutoHide"), "overlay should hide after the result");
 assert(overlayJs.includes("drawSectorChance"), "overlay should show configured chance percentages");
 assert(overlayHtml.includes("<span>GO</span>"), "wheel hub should show GO");
+assert(overlayHtml.includes("challenge-card"), "overlay should keep the current challenge result");
+assert(!overlayHtml.includes("masthead"), "overlay should not include the stream title header");
+assert(!overlayHtml.includes("about-panel"), "overlay should not include the About Timur panel");
+assert(!overlayHtml.includes("trigger-card"), "overlay should not include the trigger information panel");
+assert(!overlayHtml.includes("bottom-strip"), "overlay should not include the bottom information strip");
+assert(!overlayHtml.includes("map-chip"), "overlay should not include the Finland badge");
 assert(styles.includes("background: transparent"), "OBS overlay should use a transparent browser background");
 assert(styles.includes(".overlay-root.is-hidden"), "OBS overlay should support hidden idle state");
 assert(controlJs.includes("balanceOdds"), "control page should rebalance challenge percentages");

@@ -213,9 +213,9 @@
     state.items = normalizeItems(state.config.challenges || state.config.items);
     state.spinDuration = Math.max(1800, Number(state.config.spinDurationMs) || DEFAULT_CONFIG.spinDurationMs);
     state.sound = new SoundBank(state.config.sound || {});
-    dom.title.textContent = state.config.title || DEFAULT_CONFIG.title;
-    dom.subtitle.textContent = state.config.subtitle || DEFAULT_CONFIG.subtitle;
-    dom.tagline.textContent = state.config.tagline || DEFAULT_CONFIG.tagline;
+    if (dom.title) dom.title.textContent = state.config.title || DEFAULT_CONFIG.title;
+    if (dom.subtitle) dom.subtitle.textContent = state.config.subtitle || DEFAULT_CONFIG.subtitle;
+    if (dom.tagline) dom.tagline.textContent = state.config.tagline || DEFAULT_CONFIG.tagline;
     document.documentElement.style.setProperty("--accent", state.config.colors.accent || DEFAULT_CONFIG.colors.accent);
     document.documentElement.style.setProperty("--hot", state.config.colors.hot || DEFAULT_CONFIG.colors.hot);
     document.documentElement.style.setProperty("--gold", state.config.colors.gold || DEFAULT_CONFIG.colors.gold);
@@ -394,7 +394,7 @@
     dom.signal.textContent = "SPINNING";
     dom.label.textContent = "LOCKING";
     dom.detail.textContent = "Wheel is choosing the next IRL challenge.";
-    dom.triggerLine.textContent = triggerText(event);
+    if (dom.triggerLine) dom.triggerLine.textContent = triggerText(event);
     state.sound.play("spin");
     spawnStartBurst();
   }
@@ -428,7 +428,7 @@
     dom.detail.textContent = detail;
     dom.resultIcon.src = item.icon || "";
     dom.resultIcon.hidden = !item.icon;
-    dom.triggerLine.textContent = triggerText(event);
+    if (dom.triggerLine) dom.triggerLine.textContent = triggerText(event);
     if (animate) {
       dom.resultPanel.classList.remove("is-hot");
       void dom.resultPanel.offsetWidth;

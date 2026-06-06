@@ -11,30 +11,7 @@
     <main class="overlay-root" aria-live="polite">
       <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
 
-      <header class="masthead">
-        <div class="flag-mark" aria-hidden="true"></div>
-        <div class="title-stack">
-          <h1 id="overlayTitle">TIMUR FEARLESS</h1>
-          <p id="overlaySubtitle">IRL FORTUNE WHEEL</p>
-          <span id="overlayTagline">LIVE CHALLENGE SPIN</span>
-        </div>
-        <div class="map-chip" aria-hidden="true">
-          <span>FINLAND</span>
-          <strong>ONE WHEEL</strong>
-        </div>
-      </header>
-
       <section class="hud-layout">
-        <aside class="side-panel about-panel">
-          <h2>ABOUT TIMUR</h2>
-          <ul>
-            <li>IRL monowheel adventures</li>
-            <li>Exploring Finland</li>
-            <li>One wheel no limits</li>
-            <li>Community powered</li>
-          </ul>
-        </aside>
-
         <section class="wheel-stage">
           <div class="wheel-rig" id="wheelRig">
             <canvas id="wheelCanvas" class="wheel-canvas" aria-label="IRL fortune wheel"></canvas>
@@ -51,7 +28,7 @@
           </div>
         </section>
 
-        <aside class="side-panel status-panel">
+        <aside class="status-panel">
           <section class="challenge-card" id="resultPanel">
             <span id="resultSignal">CURRENT CHALLENGE</span>
             <div class="challenge-row">
@@ -61,28 +38,9 @@
                 <p id="resultDetail">Find some green and touch it.</p>
               </div>
             </div>
-            <small id="triggerLine">Waiting for donation, bits, sub, member, or manual test.</small>
-          </section>
-
-          <section class="trigger-card">
-            <h2>TRIGGERED BY</h2>
-            <div class="trigger-grid">
-              <span>Donation EUR 5+</span>
-              <span>Twitch Bits 500+</span>
-              <span>Paid Sub</span>
-              <span>Kick Support</span>
-              <span>YouTube Member</span>
-              <span>Super Sticker</span>
-            </div>
           </section>
         </aside>
       </section>
-
-      <footer class="bottom-strip">
-        <span>Current route</span>
-        <strong>HELSINKI -> LIVE IRL</strong>
-        <em>Any qualifying support can spin the wheel</em>
-      </footer>
     </main>
     <script src="./overlay.js"></script>
   </body>
