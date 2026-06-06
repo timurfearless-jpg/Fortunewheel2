@@ -62,20 +62,14 @@ body {
 .hud-layout {
   position: absolute;
   inset: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(290px, 20vw, 380px);
-  align-items: center;
-  gap: clamp(24px, 3vw, 64px);
-  padding: clamp(30px, 4vh, 60px) clamp(46px, 5vw, 96px);
   pointer-events: none;
 }
 
 .wheel-stage {
-  position: relative;
+  position: absolute;
+  inset: 0;
   display: grid;
   place-items: center;
-  min-width: 0;
-  transform: translateX(4vw);
 }
 
 .wheel-rig {
@@ -171,8 +165,11 @@ body {
 }
 
 .status-panel {
-  width: 100%;
-  align-self: center;
+  position: absolute;
+  top: 50%;
+  right: clamp(46px, 5vw, 96px);
+  width: clamp(290px, 20vw, 380px);
+  transform: translateY(-50%);
 }
 
 .challenge-card {
@@ -278,24 +275,42 @@ body {
 }
 
 @media (max-width: 1100px) {
-  .hud-layout {
-    grid-template-columns: minmax(0, 1fr) clamp(250px, 30vw, 320px);
-    gap: 16px;
-    padding: 24px;
-  }
-
-  .wheel-stage {
-    transform: translateX(4vw);
-  }
-
   .wheel-rig {
     width: min(76vh, 64vw, 690px);
     min-width: 300px;
+  }
+
+  .status-panel {
+    right: 24px;
+    width: 270px;
+  }
+
+  .challenge-card {
+    padding: 14px 16px;
+  }
+
+  .challenge-row {
+    grid-template-columns: 46px minmax(0, 1fr);
+    gap: 11px;
+    margin-top: 9px;
+  }
+
+  .challenge-row h2 {
+    font-size: clamp(20px, 2.7vw, 29px);
+    line-height: 1;
+  }
+
+  .challenge-row p {
+    font-size: 10px;
+    line-height: 1.24;
   }
 }
 
 @media (max-width: 720px), (max-height: 560px) {
   .hud-layout {
+    position: absolute;
+    inset: 0;
+    display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: minmax(0, 1fr) auto;
     gap: 8px;
@@ -303,6 +318,8 @@ body {
   }
 
   .wheel-stage {
+    position: relative;
+    inset: auto;
     transform: none;
   }
 
@@ -312,8 +329,12 @@ body {
   }
 
   .status-panel {
+    position: relative;
+    top: auto;
+    right: auto;
     width: min(100%, 420px);
     justify-self: center;
+    transform: none;
   }
 
   .challenge-card {
