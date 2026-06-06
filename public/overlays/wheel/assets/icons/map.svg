@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Map icon">
+  <path fill="none" stroke="#f6fbff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="m10 18 14-6 16 6 14-6v34l-14 6-16-6-14 6V18Z"/>
+  <path fill="none" stroke="#18d8ff" stroke-linecap="round" stroke-width="4" d="M24 12v34M40 18v34"/>
+  <circle cx="42" cy="31" r="5" fill="none" stroke="#7dff6a" stroke-width="4"/>
+</svg>

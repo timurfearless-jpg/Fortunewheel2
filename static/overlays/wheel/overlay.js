@@ -12,10 +12,12 @@
     autoSpinDelayMs: 900,
     pollNetlifyState: true,
     pollIntervalMs: 1800,
+    hideWhenIdle: true,
+    hideAfterResultMs: 15000,
     muted: false,
     particles: true,
     sparks: true,
-    maxParticles: 120,
+    maxParticles: 260,
     reducedPerformance: false,
     sound: {
       enabled: true,
@@ -29,15 +31,16 @@
       violet: "#7c5cff",
       ink: "#07111f"
     },
-    items: [
-      { label: "Touch Grass", color: "#7dff6a", weight: 1, detail: "Find some green nearby and touch it on camera." },
-      { label: "Find Blue", color: "#18d8ff", weight: 1, detail: "Point the camera at any blue object." },
-      { label: "Coffee Stop", color: "#ffd166", weight: 1, detail: "Find a cafe, cup, or coffee sign." },
-      { label: "Chat Route", color: "#7c5cff", weight: 1, detail: "Show two safe directions and let chat pick." }
+    challenges: [
+      { key: "touch_grass", label: "TOUCH\nGRASS", title: "TOUCH GRASS", color: "#1b9f64", icon: "grass", desc: "Find some grass or green nature nearby and touch it on stream." },
+      { key: "touch_water", label: "TOUCH\nWATER", title: "TOUCH WATER", color: "#1267a8", icon: "water", desc: "Find safe water nearby - sea, lake, fountain, or puddle - and touch it." },
+      { key: "timeout", label: "TIMEOUT", title: "TIMEOUT", color: "#3b2b7a", icon: "timeout", desc: "The spinner gets a 10 min timeout in chat. Chat jail activated." },
+      { key: "show_euc", label: "SHOW\nEUC", title: "SHOW EUC", color: "#0f4f73", icon: "monowheel", desc: "Stop for a moment and show the electric unicycle to the stream." }
     ]
   };
 
   const dom = {
+    root: document.querySelector(".overlay-root"),
     wheel: document.getElementById("wheelCanvas"),
     particles: document.getElementById("particleCanvas"),
     rig: document.getElementById("wheelRig"),
@@ -79,7 +82,9 @@
     lastFrame: 0,
     lastSparkAt: 0,
     lastTickSector: -1,
+    lastTickAt: 0,
     animationId: 0,
+    hideTimer: 0,
     reduced: media.matches,
     sound: null,
     lastEventAt: new Date().toISOString(),
@@ -95,6 +100,7 @@
       this.volume = clamp(Number(this.config.volume) || 0.4, 0, 1);
       this.audio = {};
       this.context = null;
+      this.tickCounter = 0;
       if (params.get("sound") === "1") {
         this.enabled = true;
         this.muted = false;
@@ -117,8 +123,14 @@
       if (!this.enabled || this.muted) return;
       const audio = this.audio[name];
       if (audio) {
-        audio.currentTime = 0;
-        audio.play().catch(() => this.playSynth(name));
+        const player = name === "tick" ? audio.cloneNode() : audio;
+        player.volume = name === "tick" ? Math.min(1, this.volume * 1.08) : this.volume;
+        if (name === "tick") {
+          this.tickCounter += 1;
+          player.playbackRate = [0.92, 1, 1.07, 0.97][this.tickCounter % 4];
+        }
+        player.currentTime = 0;
+        player.play().catch(() => this.playSynth(name));
         return;
       }
       this.playSynth(name);
@@ -164,6 +176,7 @@
     setupTriggers();
     drawWheel();
     revealResult(0, null, false);
+    setOverlayVisible(shouldStartVisible(), true);
     startLoop();
     startPolling();
 
@@ -178,6 +191,12 @@
     return Boolean(state.config.autoSpinOnLoad);
   }
 
+  function shouldStartVisible() {
+    if (params.get("visible") === "1" || params.get("setup") === "1") return true;
+    if (params.get("demo") === "1" || params.get("spin") === "1") return true;
+    return !state.config.hideWhenIdle;
+  }
+
   async function loadConfig() {
     try {
       const response = await fetch("./config.json", { cache: "no-store" });
@@ -190,29 +209,33 @@
   }
 
   function applyConfig(config) {
-    state.config = config;
-    state.items = normalizeItems(config.items);
-    state.spinDuration = Math.max(1200, Number(config.spinDurationMs) || DEFAULT_CONFIG.spinDurationMs);
-    state.sound = new SoundBank(config.sound || {});
-    dom.title.textContent = config.title || DEFAULT_CONFIG.title;
-    dom.subtitle.textContent = config.subtitle || DEFAULT_CONFIG.subtitle;
-    dom.tagline.textContent = config.tagline || DEFAULT_CONFIG.tagline;
-    document.documentElement.style.setProperty("--accent", config.colors.accent || DEFAULT_CONFIG.colors.accent);
-    document.documentElement.style.setProperty("--hot", config.colors.hot || DEFAULT_CONFIG.colors.hot);
-    document.documentElement.style.setProperty("--gold", config.colors.gold || DEFAULT_CONFIG.colors.gold);
-    document.documentElement.style.setProperty("--green", config.colors.green || DEFAULT_CONFIG.colors.green);
+    state.config = deepMerge(DEFAULT_CONFIG, config || {});
+    state.items = normalizeItems(state.config.challenges || state.config.items);
+    state.spinDuration = Math.max(1800, Number(state.config.spinDurationMs) || DEFAULT_CONFIG.spinDurationMs);
+    state.sound = new SoundBank(state.config.sound || {});
+    dom.title.textContent = state.config.title || DEFAULT_CONFIG.title;
+    dom.subtitle.textContent = state.config.subtitle || DEFAULT_CONFIG.subtitle;
+    dom.tagline.textContent = state.config.tagline || DEFAULT_CONFIG.tagline;
+    document.documentElement.style.setProperty("--accent", state.config.colors.accent || DEFAULT_CONFIG.colors.accent);
+    document.documentElement.style.setProperty("--hot", state.config.colors.hot || DEFAULT_CONFIG.colors.hot);
+    document.documentElement.style.setProperty("--gold", state.config.colors.gold || DEFAULT_CONFIG.colors.gold);
+    document.documentElement.style.setProperty("--green", state.config.colors.green || DEFAULT_CONFIG.colors.green);
     preloadIcons(state.items);
+    drawWheel();
   }
 
   function normalizeItems(items) {
-    const list = Array.isArray(items) && items.length ? items : DEFAULT_CONFIG.items;
+    const list = Array.isArray(items) && items.length ? items : DEFAULT_CONFIG.challenges;
     return list.map((item, index) => ({
-      label: cleanText(item.label || `Sector ${index + 1}`, 24),
-      detail: cleanText(item.detail || item.description || item.result || item.label || "Challenge unlocked", 96),
+      key: cleanText(item.key || `sector-${index + 1}`, 40),
+      label: cleanLabel(item.label || `Sector ${index + 1}`, 32),
+      detail: cleanText(item.detail || item.desc || item.description || item.result || item.label || "Challenge unlocked", 120),
       title: cleanText(item.title || item.label || `Challenge ${index + 1}`, 48),
-      icon: typeof item.icon === "string" ? item.icon : "",
+      icon: resolveIconPath(item.icon),
       color: isColor(item.color) ? item.color : colorFor(index),
-      weight: Math.max(0.1, Number(item.weight) || 1)
+      accent: isColor(item.accent) ? item.accent : isColor(item.color) ? item.color : colorFor(index),
+      chance: Math.max(0.01, Number(item.chance ?? item.weight) || 1),
+      weight: Math.max(0.01, Number(item.chance ?? item.weight) || 1)
     }));
   }
 
@@ -230,20 +253,33 @@
   function setupTriggers() {
     window.fearlessWheel = {
       spin: (pick) => spin(pick, demoEvent()),
+      setConfig: (config) => updateRuntimeConfig(config),
+      show: () => setOverlayVisible(true),
+      hide: () => setOverlayVisible(false),
       config: () => state.config,
       result: () => state.items[state.selectedIndex]
     };
 
     window.addEventListener("message", (event) => {
-      if (!event.data || event.data.type !== "fearless-wheel:spin") return;
-      spin(event.data.pick, event.data.event || demoEvent());
+      if (!event.data) return;
+      if (event.data.type === "fearless-wheel:spin") {
+        spin(event.data.pick, event.data.event || demoEvent());
+      }
+      if (event.data.type === "fearless-wheel:config") {
+        updateRuntimeConfig(event.data.config);
+      }
     });
 
     if ("BroadcastChannel" in window) {
       const channel = new BroadcastChannel("fearless-wheel");
       channel.addEventListener("message", (event) => {
-        if (!event.data || event.data.type !== "spin") return;
-        spin(event.data.pick, event.data.event || demoEvent());
+        if (!event.data) return;
+        if (event.data.type === "spin") {
+          spin(event.data.pick, event.data.event || demoEvent());
+        }
+        if (event.data.type === "config") {
+          updateRuntimeConfig(event.data.config);
+        }
       });
     }
   }
@@ -310,15 +346,15 @@
 
     if (state.spinning) {
       const t = clamp((now - state.spinStartedAt) / state.spinDuration, 0, 1);
-      state.rotation = lerp(state.startRotation, state.targetRotation, easeOutQuart(t));
-      playTickIfNeeded();
-      if (!state.reduced && state.config.sparks && now - state.lastSparkAt > 34) {
+      state.rotation = lerp(state.startRotation, state.targetRotation, easeOutQuint(t));
+      playTickIfNeeded(now);
+      if (!state.reduced && state.config.sparks && now - state.lastSparkAt > 18) {
         state.lastSparkAt = now;
         spawnSpinSpark();
       }
       if (t >= 1) finishSpin();
       drawWheel();
-    } else if (!state.reduced && state.config.sparks && now - state.lastSparkAt > 140) {
+    } else if (!isOverlayHidden() && !state.reduced && state.config.sparks && now - state.lastSparkAt > 140) {
       state.lastSparkAt = now;
       spawnAmbientSpark();
     }
@@ -334,6 +370,8 @@
       state.queue.push({ pick, event });
       return;
     }
+    setOverlayVisible(true);
+    window.clearTimeout(state.hideTimer);
 
     const selectedIndex = resolvePick(pick);
     const sector = TAU / state.items.length;
@@ -350,7 +388,8 @@
     state.spinStartedAt = performance.now();
     state.spinning = true;
     state.lastTickSector = -1;
-    state.spinDuration = Math.max(1200, Number(state.config.spinDurationMs) || DEFAULT_CONFIG.spinDurationMs);
+    state.lastTickAt = 0;
+    state.spinDuration = Math.max(1800, Number(state.config.spinDurationMs) || DEFAULT_CONFIG.spinDurationMs);
     dom.rig.classList.add("is-spinning");
     dom.signal.textContent = "SPINNING";
     dom.label.textContent = "LOCKING";
@@ -374,6 +413,8 @@
     if (state.queue.length) {
       const next = state.queue.shift();
       window.setTimeout(() => spin(next.pick, next.event), 950);
+    } else {
+      scheduleAutoHide();
     }
   }
 
@@ -412,7 +453,7 @@
     if (typeof pick === "string") {
       const wanted = pick.toLowerCase();
       const found = state.items.findIndex((item) => {
-        return item.label.toLowerCase() === wanted || item.title.toLowerCase() === wanted;
+        return item.key.toLowerCase() === wanted || item.label.toLowerCase() === wanted || item.title.toLowerCase() === wanted;
       });
       if (found >= 0) return found;
     }
@@ -493,6 +534,7 @@
   function drawSector(ctx, item, start, end, radius, inner, index) {
     const mid = (start + end) / 2;
     const color = item.color;
+    const accent = item.accent || color;
     const selected = !state.spinning && index === state.selectedIndex;
     const gradient = ctx.createRadialGradient(0, 0, inner, 0, 0, radius);
     gradient.addColorStop(0, rgba(color, selected ? 0.58 : 0.42));
@@ -508,12 +550,13 @@
     ctx.closePath();
     ctx.fillStyle = gradient;
     ctx.fill();
-    ctx.strokeStyle = rgba(color, 0.78);
+    ctx.strokeStyle = rgba(accent, 0.82);
     ctx.lineWidth = 2 * state.dpr;
     ctx.stroke();
 
     drawSectorIcon(ctx, item, mid, radius);
     drawSectorLabel(ctx, item, mid, radius);
+    drawSectorChance(ctx, item, mid, radius);
     ctx.restore();
   }
 
@@ -529,7 +572,7 @@
     ctx.rotate(angle + Math.PI / 2);
     ctx.globalAlpha = 0.98;
     if (image && image.complete && image.naturalWidth) {
-      ctx.shadowColor = rgba(item.color, 0.76);
+      ctx.shadowColor = rgba(item.accent || item.color, 0.76);
       ctx.shadowBlur = 18 * state.dpr;
       ctx.drawImage(image, -iconSize / 2, -iconSize / 2, iconSize, iconSize);
     } else {
@@ -566,6 +609,26 @@
     ctx.restore();
   }
 
+  function drawSectorChance(ctx, item, angle, radius) {
+    const chanceRadius = radius * 0.91;
+    const x = Math.cos(angle) * chanceRadius;
+    const y = Math.sin(angle) * chanceRadius;
+    const fontSize = Math.max(8 * state.dpr, radius * 0.026);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle + Math.PI / 2);
+    ctx.fillStyle = item.key === "mystery" ? "rgba(244, 199, 72, 0.98)" : "rgba(158, 239, 255, 0.9)";
+    ctx.strokeStyle = "rgba(2, 7, 16, 0.9)";
+    ctx.lineWidth = 3 * state.dpr;
+    ctx.font = `900 ${fontSize}px Arial, sans-serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    const text = `${formatChance(item.chance)}%`;
+    ctx.strokeText(text, 0, 0);
+    ctx.fillText(text, 0, 0);
+    ctx.restore();
+  }
+
   function drawInnerRings(ctx, radius, inner) {
     ctx.save();
     ctx.fillStyle = "rgba(5, 14, 28, 0.88)";
@@ -582,12 +645,14 @@
     ctx.restore();
   }
 
-  function playTickIfNeeded() {
+  function playTickIfNeeded(now) {
     const sector = TAU / state.items.length;
     const pointerLocal = normalizeAngle(POINTER_ANGLE - state.rotation);
     const current = Math.floor(pointerLocal / sector);
-    if (current !== state.lastTickSector) {
+    const minimumGap = state.reduced || state.config.reducedPerformance ? 55 : 22;
+    if (current !== state.lastTickSector && now - state.lastTickAt > minimumGap) {
       state.lastTickSector = current;
+      state.lastTickAt = now;
       state.sound.play("tick");
     }
   }
@@ -599,12 +664,13 @@
 
   function spawnSpinSpark() {
     if (!state.config.particles || state.particles.length >= particleLimit()) return;
-    for (let i = 0; i < 2; i += 1) {
-      spawnRingParticle(0.2, 0.42);
+    const burst = state.config.reducedPerformance ? 2 : 5;
+    for (let i = 0; i < burst; i += 1) {
+      spawnRingParticle(0.26, 0.78, true);
     }
   }
 
-  function spawnRingParticle(minSpeed, maxSpeed) {
+  function spawnRingParticle(minSpeed, maxSpeed, tronTrail) {
     const rect = dom.wheel.getBoundingClientRect();
     const root = dom.particles.getBoundingClientRect();
     const cx = (rect.left - root.left + rect.width / 2) * state.dpr;
@@ -612,21 +678,25 @@
     const radius = Math.min(rect.width, rect.height) * 0.48 * state.dpr;
     const angle = Math.random() * TAU;
     const speed = minSpeed + Math.random() * maxSpeed;
-    const color = Math.random() > 0.52 ? state.config.colors.accent : state.config.colors.hot;
+    const tangent = angle + Math.PI / 2 + (Math.random() > 0.5 ? 0.32 : -0.32);
+    const outward = 0.09 + Math.random() * 0.16;
+    const colorRoll = Math.random();
+    const color = colorRoll > 0.72 ? "#f6fbff" : colorRoll > 0.38 ? state.config.colors.accent : state.config.colors.hot;
     addParticle({
       x: cx + Math.cos(angle) * radius,
       y: cy + Math.sin(angle) * radius,
-      vx: Math.cos(angle) * speed * state.dpr,
-      vy: Math.sin(angle) * speed * state.dpr,
-      life: 340 + Math.random() * 320,
-      size: 1.4 + Math.random() * 3.4,
-      color
+      vx: (Math.cos(tangent) * speed + Math.cos(angle) * outward) * state.dpr,
+      vy: (Math.sin(tangent) * speed + Math.sin(angle) * outward) * state.dpr,
+      life: (tronTrail ? 520 : 340) + Math.random() * 420,
+      size: (tronTrail ? 1.2 : 1.4) + Math.random() * (tronTrail ? 2.6 : 3.4),
+      color,
+      trail: Boolean(tronTrail)
     });
   }
 
   function spawnStartBurst() {
     if (state.reduced || !state.config.particles) return;
-    for (let i = 0; i < 20; i += 1) spawnRingParticle(0.22, 0.52);
+    for (let i = 0; i < 34; i += 1) spawnRingParticle(0.25, 0.72, true);
   }
 
   function spawnResultBurst() {
@@ -635,7 +705,7 @@
     const cx = (rect.left - root.left + rect.width / 2) * state.dpr;
     const cy = (rect.top - root.top + rect.height / 2) * state.dpr;
     const color = state.items[state.selectedIndex].color || state.config.colors.accent;
-    const count = Math.min(58, particleLimit() - state.particles.length);
+    const count = Math.min(96, particleLimit() - state.particles.length);
     for (let i = 0; i < count; i += 1) {
       const angle = (i / count) * TAU + Math.random() * 0.14;
       const speed = (0.25 + Math.random() * 0.58) * state.dpr;
@@ -646,7 +716,8 @@
         vy: Math.sin(angle) * speed,
         life: 760 + Math.random() * 480,
         size: 2 + Math.random() * 4.4,
-        color: i % 3 === 0 ? state.config.colors.gold : color
+        color: i % 3 === 0 ? state.config.colors.gold : color,
+        trail: i % 2 === 0
       });
     }
   }
@@ -655,6 +726,8 @@
     if (state.particles.length >= particleLimit()) state.particles.shift();
     state.particles.push({
       ...particle,
+      px: particle.x,
+      py: particle.y,
       age: 0,
       maxLife: particle.life
     });
@@ -663,10 +736,12 @@
   function updateParticles(dt) {
     for (const particle of state.particles) {
       particle.age += dt;
+      particle.px = particle.x;
+      particle.py = particle.y;
       particle.x += particle.vx * dt;
       particle.y += particle.vy * dt;
-      particle.vx *= 0.992;
-      particle.vy *= 0.992;
+      particle.vx *= particle.trail ? 0.988 : 0.992;
+      particle.vy *= particle.trail ? 0.988 : 0.992;
     }
     state.particles = state.particles.filter((particle) => particle.age < particle.maxLife);
   }
@@ -681,7 +756,15 @@
       ctx.globalAlpha = clamp(t, 0, 1);
       ctx.fillStyle = particle.color;
       ctx.shadowColor = particle.color;
-      ctx.shadowBlur = 16 * state.dpr;
+      ctx.shadowBlur = particle.trail ? 22 * state.dpr : 16 * state.dpr;
+      if (particle.trail) {
+        ctx.strokeStyle = particle.color;
+        ctx.lineWidth = Math.max(1, particle.size * 0.72) * state.dpr;
+        ctx.beginPath();
+        ctx.moveTo(particle.px, particle.py);
+        ctx.lineTo(particle.x, particle.y);
+        ctx.stroke();
+      }
       ctx.beginPath();
       ctx.arc(particle.x, particle.y, particle.size * state.dpr * (0.4 + t), 0, TAU);
       ctx.fill();
@@ -691,7 +774,43 @@
 
   function particleLimit() {
     const configured = Number(state.config.maxParticles) || DEFAULT_CONFIG.maxParticles;
-    return state.reduced || state.config.reducedPerformance ? Math.min(28, configured) : Math.min(160, configured);
+    return state.reduced || state.config.reducedPerformance ? Math.min(48, configured) : Math.min(320, configured);
+  }
+
+  function updateRuntimeConfig(config) {
+    if (!config || typeof config !== "object") return;
+    const next = deepMerge(state.config, config);
+    applyConfig(next);
+    state.selectedIndex = Math.min(state.selectedIndex, state.items.length - 1);
+    revealResult(Math.max(0, state.selectedIndex), state.pendingEvent, false);
+    if (!state.spinning && state.config.hideWhenIdle && !shouldStartVisible()) {
+      scheduleAutoHide(250);
+    }
+  }
+
+  function setOverlayVisible(visible, immediate) {
+    if (!dom.root) return;
+    window.clearTimeout(state.hideTimer);
+    dom.root.classList.toggle("is-hidden", !visible);
+    dom.root.classList.toggle("is-live", visible);
+    if (immediate) {
+      dom.root.classList.toggle("is-instant", true);
+      window.setTimeout(() => dom.root.classList.remove("is-instant"), 40);
+    }
+  }
+
+  function isOverlayHidden() {
+    return Boolean(dom.root && dom.root.classList.contains("is-hidden"));
+  }
+
+  function scheduleAutoHide(delay) {
+    if (!state.config.hideWhenIdle) return;
+    if (params.get("visible") === "1" || params.get("setup") === "1" || params.get("demo") === "1") return;
+    const hold = Number.isFinite(Number(delay)) ? Number(delay) : Number(state.config.hideAfterResultMs) || 15000;
+    window.clearTimeout(state.hideTimer);
+    state.hideTimer = window.setTimeout(() => {
+      if (!state.spinning && !state.queue.length) setOverlayVisible(false);
+    }, Math.max(0, hold));
   }
 
   function demoEvent() {
@@ -738,11 +857,32 @@
     return ["#7dff6a", "#18d8ff", "#ffd166", "#7c5cff", "#00f5d4", "#ff2bd6"][index % 6];
   }
 
+  function formatChance(value) {
+    const number = Number(value) || 0;
+    return Number.isInteger(number) ? String(number) : number.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
+  }
+
   function labelLines(label) {
-    const words = cleanText(label, 20).toUpperCase().split(/\s+/).filter(Boolean);
+    const manual = String(label || "")
+      .split(/\n+/)
+      .map((line) => cleanText(line, 14).toUpperCase())
+      .filter(Boolean);
+    if (manual.length > 1) return manual.slice(0, 2);
+    const words = cleanText(label, 22).toUpperCase().split(/\s+/).filter(Boolean);
     if (words.length <= 1) return [words[0] || "SPIN"];
     if (words.length === 2) return words;
     return [words.slice(0, 2).join(" "), words.slice(2).join(" ")].filter(Boolean);
+  }
+
+  function cleanLabel(value, limit) {
+    return String(value || "")
+      .replace(/\\n/g, "\n")
+      .replace(/[^\S\n]+/g, " ")
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .join("\n")
+      .slice(0, limit);
   }
 
   function cleanText(value, limit) {
@@ -750,6 +890,13 @@
       .replace(/\s+/g, " ")
       .trim()
       .slice(0, limit);
+  }
+
+  function resolveIconPath(icon) {
+    if (typeof icon !== "string" || !icon.trim()) return "";
+    const value = icon.trim();
+    if (/^(https?:|data:|\.\/|\/|assets\/)/i.test(value)) return value;
+    return `assets/icons/${value}.svg`;
   }
 
   function isColor(value) {
@@ -770,5 +917,9 @@
 
   function easeOutQuart(t) {
     return 1 - Math.pow(1 - t, 4);
+  }
+
+  function easeOutQuint(t) {
+    return 1 - Math.pow(1 - t, 5);
   }
 })();

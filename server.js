@@ -100,7 +100,15 @@ function pickChallenge() {
     };
   }
 
-  const index = Math.floor(Math.random() * challenges.length);
+  const totalWeight = challenges.reduce((sum, challenge) => sum + challenge.weight, 0);
+  let roll = Math.random() * totalWeight;
+  for (let index = 0; index < challenges.length; index += 1) {
+    roll -= challenges[index].weight;
+    if (roll <= 0) {
+      return { index, challenge: challenges[index], total: challenges.length };
+    }
+  }
+  const index = challenges.length - 1;
   return { index, challenge: challenges[index], total: challenges.length };
 }
 

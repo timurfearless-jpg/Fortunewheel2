@@ -13,12 +13,12 @@
     "background": "transparent"
   },
   "wheel": {
-    "spinSeconds": 7.6,
+    "spinSeconds": 8.2,
     "idlePulse": true,
     "showQueue": true,
     "confetti": true,
     "sound": true,
-    "soundVolume": 0.18
+    "soundVolume": 0.24
   },
   "chat": {
     "enabled": true,
@@ -57,86 +57,93 @@
   "challenges": [
     {
       "label": "Grass",
-      "title": "Touch grass",
-      "description": "Find some green nearby and touch it on camera.",
+      "title": "TOUCH GRASS",
+      "description": "Find some grass or green nature nearby and touch it on stream.",
       "duration": "1 min",
-      "weight": 1
+      "weight": 8.25
     },
     {
-      "label": "Blue",
-      "title": "Find blue",
-      "description": "Point the camera at any blue object around you.",
+      "label": "Water",
+      "title": "TOUCH WATER",
+      "description": "Find safe water nearby - sea, lake, fountain, or puddle - and touch it.",
       "duration": "1 min",
-      "weight": 1
+      "weight": 8.25
     },
     {
-      "label": "Coffee",
-      "title": "Coffee stop",
-      "description": "Find a cafe, cup, or coffee sign and show it to chat.",
-      "duration": "2 min",
-      "weight": 1
+      "label": "Timeout",
+      "title": "TIMEOUT",
+      "description": "The spinner gets a 10 min timeout in chat. Chat jail activated.",
+      "duration": "10 min",
+      "weight": 8.25
     },
     {
-      "label": "Route",
-      "title": "Chat route",
-      "description": "Show two safe directions and let chat pick where the wheel sends you.",
-      "duration": "2 min",
-      "weight": 1
+      "label": "EUC",
+      "title": "SHOW EUC",
+      "description": "Stop for a moment and show the electric unicycle to the stream.",
+      "duration": "30 sec",
+      "weight": 8.25
     },
     {
       "label": "Hello",
-      "title": "Say hello",
-      "description": "Give a friendly wave or hello to the stream while staying safe.",
+      "title": "HELLO GUYS",
+      "description": "Say your legendary Hello guys to the stream with full energy.",
       "duration": "20 sec",
-      "weight": 1
+      "weight": 8.25
     },
     {
-      "label": "Review",
-      "title": "Mini review",
-      "description": "Rate the current spot in one quick sentence.",
+      "label": "Go",
+      "title": "LET'S GO",
+      "description": "Do a quick hype moment and continue the ride Fearless style.",
       "duration": "30 sec",
-      "weight": 1
+      "weight": 8.25
     },
     {
-      "label": "Flag",
-      "title": "Find flag",
-      "description": "Find a flag, sign, logo, or landmark and show it to chat.",
+      "label": "Route",
+      "title": "CHAT ROUTE",
+      "description": "Chat chooses the next direction: left, right, straight, or stop.",
+      "duration": "2 min",
+      "weight": 8.25
+    },
+    {
+      "label": "Swap",
+      "title": "ROUTE SWAP",
+      "description": "Immediately change your planned route and take a different way.",
+      "duration": "2 min",
+      "weight": 8.25
+    },
+    {
+      "label": "Location",
+      "title": "CHANGE LOCATION",
+      "description": "Move to a new nearby location, street, park, square, or viewpoint.",
+      "duration": "3 min",
+      "weight": 8.25
+    },
+    {
+      "label": "Blue",
+      "title": "FIND BLUE",
+      "description": "Find something blue nearby and show it to the stream.",
       "duration": "1 min",
-      "weight": 1
+      "weight": 8.25
     },
     {
-      "label": "POV",
-      "title": "POV spin",
-      "description": "Do a slow safe camera pan so chat sees the area.",
-      "duration": "20 sec",
-      "weight": 1
-    },
-    {
-      "label": "Rate",
-      "title": "Rate this spot",
-      "description": "Give the current view a score out of ten and explain why.",
-      "duration": "30 sec",
-      "weight": 1
-    },
-    {
-      "label": "Bonus",
-      "title": "Lucky bonus",
-      "description": "Chat gets one bonus quick choice that is safe and easy.",
+      "label": "History",
+      "title": "STREET HISTORY",
+      "description": "Tell chat one quick fact or guess about this street, place, or area.",
       "duration": "1 min",
-      "weight": 1
+      "weight": 8.25
     },
     {
-      "label": "Chat",
-      "title": "Talk to chat",
-      "description": "Answer one chat question while rolling safely or while stopped.",
+      "label": "Hydrate",
+      "title": "HYDRATE",
+      "description": "Stop safely and drink some water.",
       "duration": "1 min",
-      "weight": 1
+      "weight": 8.25
     },
     {
-      "label": "Cinematic",
-      "title": "Cinematic shot",
-      "description": "Capture a clean five second scenic shot for the stream.",
-      "duration": "5 sec",
+      "label": "Mystery",
+      "title": "MYSTERY",
+      "description": "A harder random challenge from the secret Fearless task list.",
+      "duration": "IRL",
       "weight": 1
     }
   ]

@@ -2,20 +2,21 @@
   "title": "TIMUR FEARLESS",
   "subtitle": "IRL FORTUNE WHEEL",
   "tagline": "LIVE CHALLENGE SPIN",
-  "spinDurationMs": 7600,
+  "spinDurationMs": 8200,
   "autoSpinOnLoad": false,
   "autoSpinDelayMs": 900,
   "pollNetlifyState": true,
   "pollIntervalMs": 1800,
+  "hideWhenIdle": true,
+  "hideAfterResultMs": 15000,
   "muted": false,
   "particles": true,
   "sparks": true,
-  "maxParticles": 132,
+  "maxParticles": 260,
   "reducedPerformance": false,
-  "resultHoldMs": 9000,
   "sound": {
     "enabled": true,
-    "volume": 0.42,
+    "volume": 0.48,
     "spin": "assets/sounds/spin.wav",
     "tick": "assets/sounds/tick.wav",
     "result": "assets/sounds/result.wav"
@@ -36,90 +37,124 @@
     "paidSubs": true,
     "youtubeMembers": true
   },
-  "items": [
+  "challenges": [
     {
-      "label": "Touch Grass",
-      "icon": "assets/icons/grass.svg",
-      "color": "#7dff6a",
-      "weight": 1,
-      "detail": "Find some green nearby and touch it on camera."
+      "key": "touch_grass",
+      "label": "TOUCH\nGRASS",
+      "title": "TOUCH GRASS",
+      "desc": "Find some grass or green nature nearby and touch it on stream.",
+      "icon": "grass",
+      "color": "#1b9f64",
+      "chance": 8.25
     },
     {
-      "label": "Find Blue",
-      "icon": "assets/icons/blue.svg",
-      "color": "#18d8ff",
-      "weight": 1,
-      "detail": "Point the camera at any blue object."
+      "key": "touch_water",
+      "label": "TOUCH\nWATER",
+      "title": "TOUCH WATER",
+      "desc": "Find safe water nearby - sea, lake, fountain, or puddle - and touch it.",
+      "icon": "water",
+      "color": "#1267a8",
+      "chance": 8.25
     },
     {
-      "label": "Coffee Stop",
-      "icon": "assets/icons/coffee.svg",
-      "color": "#ffd166",
-      "weight": 1,
-      "detail": "Find a cafe, cup, or coffee sign."
+      "key": "timeout",
+      "label": "TIMEOUT",
+      "title": "TIMEOUT",
+      "desc": "The spinner gets a 10 min timeout in chat. Chat jail activated.",
+      "icon": "timeout",
+      "color": "#3b2b7a",
+      "chance": 8.25
     },
     {
-      "label": "Chat Route",
-      "icon": "assets/icons/route-choice.svg",
-      "color": "#7c5cff",
-      "weight": 1,
-      "detail": "Show two safe directions and let chat pick."
+      "key": "show_euc",
+      "label": "SHOW\nEUC",
+      "title": "SHOW EUC",
+      "desc": "Stop for a moment and show the electric unicycle to the stream.",
+      "icon": "monowheel",
+      "color": "#0f4f73",
+      "chance": 8.25
     },
     {
-      "label": "Say Hello",
-      "icon": "assets/icons/hello.svg",
-      "color": "#00f5d4",
-      "weight": 1,
-      "detail": "Give a friendly wave or hello to the stream."
+      "key": "hello_guys",
+      "label": "HELLO\nGUYS",
+      "title": "HELLO GUYS",
+      "desc": "Say your legendary \"Hello guys\" to the stream with full energy.",
+      "icon": "wave",
+      "color": "#175670",
+      "chance": 8.25
     },
     {
-      "label": "Mini Review",
-      "icon": "assets/icons/review.svg",
-      "color": "#18d8ff",
-      "weight": 1,
-      "detail": "Rate this spot in one sentence."
+      "key": "lets_go",
+      "label": "LET'S\nGO",
+      "title": "LET'S GO",
+      "desc": "Do a quick hype moment and continue the ride Fearless style.",
+      "icon": "bolt",
+      "color": "#26479a",
+      "chance": 8.25
     },
     {
-      "label": "Find Flag",
-      "icon": "assets/icons/flag.svg",
-      "color": "#ffffff",
-      "weight": 1,
-      "detail": "Find a flag, sign, logo, or landmark."
+      "key": "chat_route",
+      "label": "CHAT\nROUTE",
+      "title": "CHAT ROUTE",
+      "desc": "Chat chooses the next direction: left, right, straight, or stop.",
+      "icon": "chat",
+      "color": "#173d75",
+      "chance": 8.25
     },
     {
-      "label": "POV Spin",
-      "icon": "assets/icons/camera.svg",
-      "color": "#ff2bd6",
-      "weight": 1,
-      "detail": "Do a slow safe camera pan for chat."
+      "key": "route_swap",
+      "label": "ROUTE\nSWAP",
+      "title": "ROUTE SWAP",
+      "desc": "Immediately change your planned route and take a different way.",
+      "icon": "route",
+      "color": "#2e4da1",
+      "chance": 8.25
     },
     {
-      "label": "Rate Spot",
-      "icon": "assets/icons/star.svg",
-      "color": "#ffd166",
-      "weight": 1,
-      "detail": "Give the current view a score out of ten."
+      "key": "change_location",
+      "label": "CHANGE\nLOCATION",
+      "title": "CHANGE LOCATION",
+      "desc": "Move to a new nearby location, street, park, square, or viewpoint.",
+      "icon": "map",
+      "color": "#103f6a",
+      "chance": 8.25
     },
     {
-      "label": "Lucky Bonus",
-      "icon": "assets/icons/gift.svg",
-      "color": "#ffcc33",
-      "weight": 1,
-      "detail": "Chat gets a bonus quick choice."
+      "key": "find_blue",
+      "label": "FIND\nBLUE",
+      "title": "FIND BLUE",
+      "desc": "Find something blue nearby and show it to the stream.",
+      "icon": "search",
+      "color": "#143f7c",
+      "chance": 8.25
     },
     {
-      "label": "Talk To Chat",
-      "icon": "assets/icons/chat.svg",
-      "color": "#9efcff",
-      "weight": 1,
-      "detail": "Answer one chat question while rolling safely."
+      "key": "street_history",
+      "label": "STREET\nHISTORY",
+      "title": "STREET HISTORY",
+      "desc": "Tell chat one quick fact or guess about this street, place, or area.",
+      "icon": "book",
+      "color": "#16345e",
+      "chance": 8.25
     },
     {
-      "label": "Cinematic Shot",
-      "icon": "assets/icons/clapper.svg",
-      "color": "#b8c7ff",
-      "weight": 1,
-      "detail": "Capture a clean five second scenic shot."
+      "key": "hydrate",
+      "label": "HYDRATE",
+      "title": "HYDRATE",
+      "desc": "Stop safely and drink some water.",
+      "icon": "hydrate",
+      "color": "#0f8fa5",
+      "chance": 8.25
+    },
+    {
+      "key": "mystery",
+      "label": "MYSTERY",
+      "title": "MYSTERY",
+      "desc": "A harder random challenge from the secret Fearless task list.",
+      "icon": "mystery",
+      "color": "#3e3f16",
+      "accent": "#f4c748",
+      "chance": 1
     }
   ]
 }

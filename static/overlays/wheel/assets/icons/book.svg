@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Book icon">
+  <path fill="none" stroke="#f6fbff" stroke-linejoin="round" stroke-width="4" d="M13 12h18c5 0 8 3 8 8v32c0-5-3-8-8-8H13V12Z"/>
+  <path fill="none" stroke="#18d8ff" stroke-linejoin="round" stroke-width="4" d="M39 20c0-5 3-8 8-8h4v32h-4c-5 0-8 3-8 8"/>
+  <path fill="none" stroke="#7dff6a" stroke-linecap="round" stroke-width="4" d="M21 24h10M21 34h9"/>
+</svg>

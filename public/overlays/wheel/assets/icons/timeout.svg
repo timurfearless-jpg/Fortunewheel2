@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Timeout icon">
+  <circle cx="32" cy="34" r="20" fill="none" stroke="#f6fbff" stroke-width="4"/>
+  <path fill="none" stroke="#18d8ff" stroke-linecap="round" stroke-width="4" d="M22 8h20M32 14v-5M32 34V22M32 34l9 8"/>
+  <path fill="none" stroke="#ff2bd6" stroke-linecap="round" stroke-width="4" d="M17 19 9 11M47 19l8-8"/>
+</svg>

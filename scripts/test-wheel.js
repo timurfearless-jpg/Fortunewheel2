@@ -45,13 +45,23 @@ for (const challenge of config.challenges) {
 
 const normalized = shared.normalizedChallenges(config);
 assert.strictEqual(normalized.length, config.challenges.length, "normalization should keep all challenges");
+assert.strictEqual(normalized.find((challenge) => challenge.label === "Mystery").weight, 1, "Mystery chance should be 1%");
+assert.strictEqual(normalized.find((challenge) => challenge.label === "Hydrate").weight, 8.25, "Hydrate should use the normal chance");
+assert.strictEqual(
+  normalized.reduce((sum, challenge) => sum + challenge.weight, 0),
+  100,
+  "challenge weights should total 100%"
+);
 
 const originalRandom = Math.random;
 try {
+  const totalWeight = normalized.reduce((sum, challenge) => sum + challenge.weight, 0);
+  let cumulativeWeight = 0;
   for (let index = 0; index < normalized.length; index += 1) {
-    Math.random = () => (index + 0.01) / normalized.length;
+    Math.random = () => (cumulativeWeight + normalized[index].weight / 2) / totalWeight;
     const picked = shared.pickChallenge(config);
-    assert.strictEqual(picked.index, index, `random bucket should map to sector ${index}`);
+    assert.strictEqual(picked.index, index, `weighted random bucket should map to sector ${index}`);
+    cumulativeWeight += normalized[index].weight;
   }
 } finally {
   Math.random = originalRandom;

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Electric unicycle icon">
+  <circle cx="32" cy="36" r="18" fill="none" stroke="#18d8ff" stroke-width="4"/>
+  <circle cx="32" cy="36" r="8" fill="none" stroke="#f6fbff" stroke-width="4"/>
+  <path fill="none" stroke="#7dff6a" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M22 18h20l5 12H17l5-12Z"/>
+  <path fill="none" stroke="#ff2bd6" stroke-linecap="round" stroke-width="4" d="M14 54h36"/>
+</svg>

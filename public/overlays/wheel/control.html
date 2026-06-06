@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Fortunewheel2 Control</title>
+    <link rel="stylesheet" href="./control.css" />
+  </head>
+  <body>
+    <main class="control-shell">
+      <header class="topbar">
+        <div>
+          <span>FORTUNEWHEEL2</span>
+          <h1>Wheel Control</h1>
+        </div>
+        <div class="top-actions">
+          <a href="./index.html?visible=1" target="_blank" rel="noreferrer">OBS setup</a>
+          <button id="copyObsUrl" type="button">Copy OBS URL</button>
+        </div>
+      </header>
+
+      <section class="preview-panel">
+        <div class="panel-head">
+          <div>
+            <span>LIVE PREVIEW</span>
+            <h2>Cyber wheel demo</h2>
+          </div>
+          <div class="button-row">
+            <button id="sendConfig" type="button">Refresh Preview</button>
+            <button id="demoSpin" type="button">Spin</button>
+          </div>
+        </div>
+        <div class="preview-frame">
+          <iframe
+            id="wheelPreview"
+            src="./index.html?demo=1&visible=1&sound=0"
+            title="Wheel preview"
+            allow="autoplay"
+          ></iframe>
+        </div>
+      </section>
+
+      <section class="settings-panel">
+        <div class="panel-head">
+          <div>
+            <span>CONFIG</span>
+            <h2>Timing and visibility</h2>
+          </div>
+          <div class="button-row">
+            <button id="balanceOdds" type="button">Balance Odds</button>
+            <button id="saveLocal" type="button">Save Local</button>
+            <button id="exportConfig" type="button">Export JSON</button>
+            <button id="resetLocal" type="button">Reset</button>
+          </div>
+        </div>
+        <div class="settings-grid">
+          <label>
+            <span>Spin duration ms</span>
+            <input id="spinDurationMs" type="number" min="1800" step="100" />
+          </label>
+          <label>
+            <span>Hide after result ms</span>
+            <input id="hideAfterResultMs" type="number" min="0" step="500" />
+          </label>
+          <label>
+            <span>Sound volume</span>
+            <input id="soundVolume" type="range" min="0" max="1" step="0.01" />
+          </label>
+          <label class="toggle-row">
+            <input id="muted" type="checkbox" />
+            <span>Muted</span>
+          </label>
+        </div>
+        <div id="oddsSummary" class="odds-summary"></div>
+      </section>
+
+      <section class="editor-panel">
+        <div class="panel-head">
+          <div>
+            <span>CHALLENGES</span>
+            <h2>IRL tasks</h2>
+          </div>
+          <button id="addChallenge" type="button">Add Task</button>
+        </div>
+        <div id="challengeList" class="challenge-list"></div>
+      </section>
+
+      <p id="statusLine" class="status-line" role="status">Ready.</p>
+    </main>
+
+    <template id="challengeTemplate">
+      <article class="challenge-editor">
+        <div class="challenge-editor__bar">
+          <strong data-title></strong>
+          <div class="mini-actions">
+            <button data-move-up type="button">Up</button>
+            <button data-move-down type="button">Down</button>
+            <button data-remove type="button">Remove</button>
+          </div>
+        </div>
+        <div class="challenge-fields">
+          <label>
+            <span>Key</span>
+            <input data-field="key" type="text" />
+          </label>
+          <label>
+            <span>Wheel label</span>
+            <textarea data-field="label" rows="2"></textarea>
+          </label>
+          <label>
+            <span>Result title</span>
+            <input data-field="title" type="text" />
+          </label>
+          <label class="wide">
+            <span>Description</span>
+            <textarea data-field="desc" rows="3"></textarea>
+          </label>
+          <label>
+            <span>Icon</span>
+            <input data-field="icon" type="text" />
+          </label>
+          <label>
+            <span>Color</span>
+            <input data-field="color" type="color" />
+          </label>
+          <label>
+            <span>Chance %</span>
+            <input data-field="chance" type="number" min="0.01" max="100" step="0.01" />
+          </label>
+        </div>
+      </article>
+    </template>
+
+    <script src="./control.js"></script>
+  </body>
+</html>
