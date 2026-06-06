@@ -75,7 +75,7 @@ body {
   display: grid;
   place-items: center;
   min-width: 0;
-  transform: translateX(-2vw);
+  transform: translateX(4vw);
 }
 
 .wheel-rig {
@@ -285,7 +285,7 @@ body {
   }
 
   .wheel-stage {
-    transform: translateX(-1vw);
+    transform: translateX(4vw);
   }
 
   .wheel-rig {
